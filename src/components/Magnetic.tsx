@@ -13,10 +13,6 @@ type Props = {
   className?: string;
 };
 
-/**
- * Bouton magnétique : attire légèrement le curseur (feedback physique),
- * motion values uniquement, aucun re-render.
- */
 export default function Magnetic({ href, children, className = "" }: Props) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLAnchorElement>(null);

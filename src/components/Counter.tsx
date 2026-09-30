@@ -7,10 +7,6 @@ import {
   useReducedMotion,
 } from "motion/react";
 
-/**
- * Compteur : de 0 à `to` quand il entre dans le viewport,
- * écriture directe dans le DOM (zéro re-render).
- */
 export default function Counter({
   to,
   label,

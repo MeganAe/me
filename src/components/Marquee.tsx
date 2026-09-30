@@ -1,4 +1,4 @@
-const items = ["VideoCompressor", "Sendy", "Proxy Share", "Interview Prep AI"];
+const items = ["VideoCompressor", "Sendy", "Strate", "Interview Prep AI"];
 
 function Set({ dupe = false }: { dupe?: boolean }) {
   return (

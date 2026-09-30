@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 
-/**
- * Préchargement court, lié au vrai chargement (load + polices),
- * avec un temps minimum et un temps maximum de sécurité.
- */
 export default function Preloader({ onDone }: { onDone: () => void }) {
   const reduce = useReducedMotion();
   const [ready, setReady] = useState(false);

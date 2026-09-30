@@ -17,12 +17,11 @@ export default function Contact() {
           </p>
         </Reveal>
         <Reveal delay={0.16}>
-          {/* REMPLACE : mettre ici l'adresse email réelle de Metoushela */}
           <Magnetic
-            href="mailto:contact@metoushela.dev"
+            href="mailto:walkermetoushela@gmail.com"
             className="btn btn-solid group mt-10"
           >
-            contact@metoushela.dev
+            walkermetoushela@gmail.com
             <IconArrowUpRight
               size={20}
               stroke={1.5}

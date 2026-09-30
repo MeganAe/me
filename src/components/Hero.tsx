@@ -1,16 +1,7 @@
-import { useRef } from "react";
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { IconBrandGithub } from "@tabler/icons-react";
-import shotCompressor from "../assets/shot-compressor.jpg";
-import shotSendy from "../assets/shot-sendy.jpg";
-import shotProxy from "../assets/shot-proxy.jpg";
 import { github } from "../data/projects";
+import photo from "../assets/photo.jpg";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -37,65 +28,31 @@ function MaskLine({
   );
 }
 
-/** Collage des trois captures produits : parallaxe 3 niveaux + flottement. */
-function Collage() {
+/** Portrait en noir et blanc, dans un cadre sobre. */
+function Portrait() {
   const reduce = useReducedMotion();
-  const boxRef = useRef<HTMLDivElement>(null);
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const a = useSpring(useTransform(mx, [-0.5, 0.5], [-5, 5]), { stiffness: 45, damping: 18 });
-  const b = useSpring(useTransform(mx, [-0.5, 0.5], [-11, 11]), { stiffness: 45, damping: 18 });
-  const c = useSpring(useTransform(mx, [-0.5, 0.5], [-17, 17]), { stiffness: 45, damping: 18 });
-  const ay = useSpring(useTransform(my, [-0.5, 0.5], [-3, 3]), { stiffness: 45, damping: 18 });
-  const by = useSpring(useTransform(my, [-0.5, 0.5], [-8, 8]), { stiffness: 45, damping: 18 });
-  const cy = useSpring(useTransform(my, [-0.5, 0.5], [-12, 12]), { stiffness: 45, damping: 18 });
-
-  const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (reduce || !boxRef.current) return;
-    const r = boxRef.current.getBoundingClientRect();
-    mx.set((e.clientX - r.left) / r.width - 0.5);
-    my.set((e.clientY - r.top) / r.height - 0.5);
-  };
-
   return (
-    <div
-      ref={boxRef}
-      onPointerMove={onMove}
-      onPointerLeave={() => {
-        mx.set(0);
-        my.set(0);
-      }}
-      className="floaty relative hidden aspect-[16/11] md:block"
-      aria-hidden
+    <motion.figure
+      initial={reduce ? false : { opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.9, delay: 0.7, ease: EASE }}
+      className="w-[min(100%,24rem)] border border-line bg-raise md:ml-auto"
     >
-      <motion.img
-        src={shotCompressor}
-        alt=""
-        className="absolute left-0 top-0 w-[72%] border border-linesoft"
-        style={reduce ? undefined : { x: a, y: ay }}
-        initial={reduce ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.9, delay: 0.5, ease: EASE }}
+      <img
+        src={photo}
+        alt="Portrait de Metoushela Walker"
+        fetchPriority="high"
+        className="aspect-[4/5] w-full object-cover object-top grayscale contrast-[1.08]"
       />
-      <motion.img
-        src={shotSendy}
-        alt=""
-        className="absolute right-[10%] top-[14%] z-10 w-[48%] border border-line"
-        style={reduce ? undefined : { x: b, y: by }}
-        initial={reduce ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.9, delay: 0.62, ease: EASE }}
-      />
-      <motion.img
-        src={shotProxy}
-        alt=""
-        className="absolute bottom-0 right-0 z-20 h-[88%] border border-line"
-        style={reduce ? undefined : { x: c, y: cy }}
-        initial={reduce ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.9, delay: 0.74, ease: EASE }}
-      />
-    </div>
+      <figcaption className="border-t border-linesoft px-5 py-4">
+        <p className="font-display text-[15px] font-semibold">
+          Metoushela Walker
+        </p>
+        <p className="mt-1 font-mono text-xs text-mute">
+          Développeur full-stack / Bukavu, RDC
+        </p>
+      </figcaption>
+    </motion.figure>
   );
 }
 
@@ -141,16 +98,7 @@ export default function Hero() {
           </motion.div>
         </div>
         <div className="min-w-0 md:col-span-5">
-          <Collage />
-          <motion.img
-            src={shotCompressor}
-            alt="Capture d'écran de VideoCompressor"
-            fetchPriority="high"
-            className="w-full border border-linesoft md:hidden"
-            initial={reduce ? false : { opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: EASE }}
-          />
+          <Portrait />
         </div>
       </div>
     </section>

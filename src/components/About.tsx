@@ -68,7 +68,7 @@ export default function About() {
                 <p className="text-[1.0625rem] leading-relaxed text-mute">
                   Je viens de l'Android, je construis du web, et je passe le
                   reste du temps à rendre des choses utiles : un compresseur de
-                  vidéo, un partage de fichiers, un proxy partagé, une
+                  vidéo, un partage de fichiers, un analyseur de disque, une
                   préparation d'entretiens. Mon GitHub raconte le reste, et je
                   ne montre ici que ce qui marche.
                 </p>

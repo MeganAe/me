@@ -1,23 +1,30 @@
+import { useCallback, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
-  motion,
-  useReducedMotion,
-} from "motion/react";
-import { IconArrowUpRight, IconBrandGithub } from "@tabler/icons-react";
+  IconArrowUpRight,
+  IconArrowsMaximize,
+  IconBrandGithub,
+} from "@tabler/icons-react";
 import Reveal from "./Reveal";
+import ProjectOverlay from "./ProjectOverlay";
 import { alsoOnline, projects, type Project } from "../data/projects";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-/**
- * Pile « sticky stack » : chaque projet reste épinglé en haut,
- * le suivant glisse par-dessus. Effet purement CSS + reveal Motion.
- */
-function WorkCard({ project, index }: { project: Project; index: number }) {
+function WorkCard({
+  project,
+  index,
+  onOpen,
+}: {
+  project: Project;
+  index: number;
+  onOpen: (p: Project) => void;
+}) {
   const reduce = useReducedMotion();
   const imageLeft = index % 2 === 0;
   return (
     <motion.article
-      className="work-card overflow-hidden border border-line bg-raise md:min-h-[68vh]"
+      className="work-card overflow-hidden border border-line bg-raise"
       style={{ top: 88 + index * 16 }}
       initial={reduce ? false : { opacity: 0, y: 44 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -25,30 +32,42 @@ function WorkCard({ project, index }: { project: Project; index: number }) {
       transition={{ duration: 0.8, ease: EASE }}
     >
       <div className="grid md:grid-cols-12">
-        <div className={`min-w-0 md:col-span-7 ${imageLeft ? "" : "md:order-2"}`}>
-          {project.imageKind === "phone" ? (
-            <div className="flex h-full items-center justify-center bg-ink p-8 md:p-10">
+        <div
+          className={`flex min-w-0 items-center bg-ink md:col-span-7 ${
+            imageLeft
+              ? "border-b border-linesoft md:border-b-0 md:border-r"
+              : "border-b border-linesoft md:order-2 md:border-b-0 md:border-l"
+          }`}
+        >
+          <button
+            type="button"
+            onClick={() => onOpen(project)}
+            aria-label={`Agrandir la capture de ${project.name}`}
+            className="group relative block w-full cursor-zoom-in"
+          >
+            {project.imageKind === "phone" ? (
+              <span className="flex w-full justify-center p-8 md:p-10">
+                <img
+                  src={project.image}
+                  alt={project.alt}
+                  loading="lazy"
+                  decoding="async"
+                  className="max-h-[56vh] w-auto border border-linesoft"
+                />
+              </span>
+            ) : (
               <img
                 src={project.image}
                 alt={project.alt}
                 loading="lazy"
                 decoding="async"
-                className="max-h-[56vh] w-auto border border-linesoft"
+                className="block h-auto w-full"
               />
-            </div>
-          ) : (
-            <img
-              src={project.image}
-              alt={project.alt}
-              loading="lazy"
-              decoding="async"
-              className={`aspect-[16/10] w-full object-cover md:aspect-auto md:h-full ${
-                imageLeft
-                  ? "border-b border-linesoft md:border-b-0 md:border-r"
-                  : "border-b border-linesoft md:border-b-0 md:border-l"
-              }`}
-            />
-          )}
+            )}
+            <span className="absolute bottom-3 right-3 border border-line bg-ink/85 p-2 text-paper opacity-100 transition-opacity duration-200 md:opacity-0 md:group-hover:opacity-100 md:group-focus-visible:opacity-100">
+              <IconArrowsMaximize size={16} stroke={1.5} />
+            </span>
+          </button>
         </div>
         <div
           className={`flex flex-col p-7 md:col-span-5 md:p-10 ${imageLeft ? "" : "md:order-1"}`}
@@ -102,6 +121,18 @@ function WorkCard({ project, index }: { project: Project; index: number }) {
 }
 
 export default function Work() {
+  const [selected, setSelected] = useState<Project | null>(null);
+  const lastFocus = useRef<HTMLElement | null>(null);
+
+  const open = useCallback((p: Project) => {
+    lastFocus.current = document.activeElement as HTMLElement | null;
+    setSelected(p);
+  }, []);
+  const close = useCallback(() => {
+    setSelected(null);
+    requestAnimationFrame(() => lastFocus.current?.focus());
+  }, []);
+
   return (
     <section id="travail" className="py-24 md:py-32">
       <div className="wrap">
@@ -118,7 +149,7 @@ export default function Work() {
         </Reveal>
         <div className="work-stack mt-14">
           {projects.map((p, i) => (
-            <WorkCard key={p.slug} project={p} index={i} />
+            <WorkCard key={p.slug} project={p} index={i} onOpen={open} />
           ))}
         </div>
 
@@ -153,6 +184,9 @@ export default function Work() {
           </div>
         </Reveal>
       </div>
+      <AnimatePresence>
+        {selected && <ProjectOverlay project={selected} onClose={close} />}
+      </AnimatePresence>
     </section>
   );
 }

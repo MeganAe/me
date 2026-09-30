@@ -1,15 +1,5 @@
 @import "tailwindcss";
 
-/* ============================================================
-   PORTFOLIO METOUSHELA WALKER (React)
-   Monde : "signal sur charbon"
-   - Charbon chaud #0E0F11, off-white #EDEBE6
-   - Un seul accent : orange signal #FF4D0D (verrouillé page entière)
-   - Angles droits partout (rayon 0), hairlines 1px
-   - Typo : Clash Display (titres) / Satoshi (texte) / JetBrains Mono (métadonnées)
-   - Z-index : 0 base, 50 menu mobile, 60 header, 70 overlay projet, 80 preloader
-   ============================================================ */
-
 @font-face {
   font-family: "Clash Display";
   font-style: normal;
@@ -104,7 +94,6 @@ body {
   margin-inline: auto;
 }
 
-/* ---------- skip link ---------- */
 .skip {
   position: fixed;
   left: 1rem;
@@ -121,7 +110,6 @@ body {
   top: 1rem;
 }
 
-/* ---------- boutons (rayon 0 verrouillé) ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -164,7 +152,6 @@ body {
   border-color: var(--color-paper);
 }
 
-/* ---------- lien nav : soulignement glissé ---------- */
 .nav-link::after {
   content: "";
   position: absolute;
@@ -181,7 +168,6 @@ body {
   transform: scaleX(1);
 }
 
-/* ---------- marquee (unique sur la page) ---------- */
 @keyframes marquee {
   to {
     transform: translateX(-50%);
@@ -201,7 +187,6 @@ body {
   background: var(--color-line);
 }
 
-/* ---------- pile sticky (section travail) ---------- */
 .work-stack {
   display: grid;
   gap: 4rem;
@@ -218,12 +203,10 @@ body {
   }
 }
 
-/* ---------- avatars pixel art ---------- */
 .pixel {
   image-rendering: pixelated;
 }
 
-/* ---------- logos de stack : monochrome, accent au survol ---------- */
 .stack-logo svg {
   display: block;
   width: 100%;
@@ -238,7 +221,6 @@ body {
   color: var(--color-signal);
 }
 
-/* ---------- flottement doux (hero collage + avatar) ---------- */
 @keyframes floaty {
   0%,
   100% {
@@ -252,7 +234,6 @@ body {
   animation: floaty 7s ease-in-out infinite;
 }
 
-/* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

@@ -9,7 +9,6 @@ type Props = {
   className?: string;
 };
 
-/** Révélation au scroll, une fois, respectant prefers-reduced-motion. */
 export default function Reveal({ children, delay = 0, className = "" }: Props) {
   const reduce = useReducedMotion();
   return (

@@ -1,10 +1,10 @@
 import shotCompressor from "../assets/shot-compressor.jpg";
 import shotSendy from "../assets/shot-sendy.jpg";
-import shotProxy from "../assets/shot-proxy.jpg";
+import shotStrate from "../assets/shot-strate.jpg";
 import shotIpa from "../assets/shot-ipa.jpg";
 import logoVideo from "../assets/logos/logo-videocompressor.svg";
 import logoSendy from "../assets/logos/logo-sendy.svg";
-import logoProxy from "../assets/logos/logo-proxy.webp";
+import logoStrate from "../assets/logos/logo-strate.png";
 import logoIpa from "../assets/logos/logo-interview.svg";
 
 export type Project = {
@@ -52,18 +52,18 @@ export const projects: Project[] = [
     repo: "https://github.com/MeganAe/Sendy",
   },
   {
-    slug: "proxy-share",
-    name: "Proxy Share",
-    tagline: "Ton proxy, partagé.",
+    slug: "strate",
+    name: "Strate",
+    tagline: "Voyez ce qui pèse. Gardez ce qui compte.",
     description:
-      "Partage ton proxy sur le réseau mobile. Adresses IP disponibles, code QR pour configurer les clients, débits en direct, appareils connectés, économiseur de batterie.",
-    stack: "Java / Android",
-    platforms: "Android",
-    image: shotProxy,
-    imageKind: "phone",
-    alt: "Application Proxy Share sur Android : démarrage, adresses IP, code QR, débits",
-    logo: logoProxy,
-    repo: "https://github.com/MeganAe/Proxyshare",
+      "Mesure ton disque, trouve les gros fichiers et les doublons, nettoie des cibles connues. Démarrage, état des disques, rapport HTML. Rien n'est supprimé sans confirmation.",
+    stack: "C# / .NET 10 / WPF",
+    platforms: "Windows",
+    image: shotStrate,
+    imageKind: "wide",
+    alt: "Tableau de bord de Strate : disque système à 92,8 %, espace récupérable, liste des volumes",
+    logo: logoStrate,
+    repo: "https://github.com/MeganAe/strate",
   },
   {
     slug: "interview-prep-ai",
